@@ -20,7 +20,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type'],
 }));
 
-console.log(process.env.MONGO_URL);
+// console.log(process.env.MONGO_URL);
 mongoose.connect(process.env.MONGO_URL);
 //sUiUNw5tERaataPE
 
@@ -36,7 +36,8 @@ app.post('/register', async (req, res) => {
         name,
         email,
         password:bcrypt.hashSync(password,bcryptSalt),
-    });
+    })
+    console.log(userDoc)
     res.json(userDoc);
 } catch(e){
   res.status(422).json(e);
@@ -50,7 +51,7 @@ app.post('/login', async (req,res)=>{
         if(passOk){
            jwt.sign({email:userDoc.email , id:userDoc._id},jwtSecret, {}, (err,token)=>{
             if(err) throw err;
-            res.cookie('token',token).json('pass ok');
+            res.cookie('token',token).json(userDoc);
 
            });
            
@@ -65,5 +66,5 @@ app.post('/login', async (req,res)=>{
 });
 
 app.listen(4000, () => {
-    console.log("app is running");
+    console.log("app is running on port 4000");
 })
