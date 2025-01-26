@@ -2,3 +2,24 @@
 @theme {
    --color-primary: #F5385D;
 }
+input[type="text"],input[type="password"],
+input[type="email"],input[type="number"],
+input[type="tel"],
+textarea{
+    @apply w-full border my-1 py-2 px-3 rounded-2xl;
+}
+textarea{
+    height: 140px;
+}
+button{
+    @apply bg-primary
+}
+button.primary{
+    background-color: #F5385D;
+    @apply bg-primary p-2 w-full text-white rounded-2xl;
+}
+
+button.primary:hover{
+   background-color: #F5385D ;
+   @apply  text-white border-primary overflow-hidden shadow-md shadow-red-200;
+}
