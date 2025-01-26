@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
-const User = require('./models/User.js');
+const User = require('./models/user.js');
 const cookieParser = require('cookie-parser')
 require('dotenv').config()
 const app = express()
@@ -93,7 +93,9 @@ app.get('/profile', (req, res) => {
 })
 
 
-
+app.post('/logout',(req,res)=>{
+    res.cookie('token','').json(true);
+})
 
 app.listen(4000, (req, res) => {
     console.log("app is running on port 4000");
