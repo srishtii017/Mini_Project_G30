@@ -11,9 +11,9 @@ textarea{
 textarea{
     height: 140px;
 }
-button{
-    @apply bg-primary
-}
+/* button{
+    @apply bg-gray-300;
+} */
 button.primary{
     background-color: #F5385D;
     @apply bg-primary p-2 w-full text-white rounded-2xl;
