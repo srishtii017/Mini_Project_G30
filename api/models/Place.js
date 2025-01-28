@@ -20,3 +20,4 @@ const placeSchema = new mongoose.Schema({
 // now the model
 const PlaceModel = mongoose.model('Place',placeSchema);
 module.exports = PlaceModel;
+
