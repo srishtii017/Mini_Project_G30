@@ -39,13 +39,13 @@ export default function Account() {
 
     return (
         <div>
-            <nav className="w-full jusify-center mt-8 gap-2 mb-8">
+            <nav className=" w-full flex jusify-center mt-8 gap-2 mb-8 ">
                 <Link className={LinkClasses('profile')} to={'/account'}>My Profile</Link>
                 <Link className={LinkClasses('bookings')} to={'/account/bookings'}>My Bookings</Link>
                 <Link className={LinkClasses('places')} to={'/account/places'}>My accommodations</Link>
             </nav>
             {subpage === 'profile' && (
-                <div className="text-center max-w-lg mx-auto">
+                <div className=" text-center max-w-lg mx-auto ">
                     Logged in as {user.name} ({user.email}) <br />
                     <button onClick={logout} className=" primary max-w-sm mt-2 ">Logout</button>
                 </div>
