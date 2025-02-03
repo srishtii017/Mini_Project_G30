@@ -39,7 +39,7 @@ export default function PlacesPage() {
         ev.preventDefault();
         const { data: filename } = await axios.post('/upload-by-link', { link: photoLink })
         setAddedPhotos(prev => {
-            return [...prev + filename]
+            return [...prev  , filename]
         })
         setPhotoLink('');
     }
@@ -74,8 +74,8 @@ export default function PlacesPage() {
                             <button onClick={addPhotoByLink} className="bg-gray-200 grow rounded-2xl">Add&nbsp; Photo</button>
                         </div>
                         <div className="mt-2 grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                            {addedPhotos.length > 0 && addedPhotos.map(link => (
-                                <div key={link}>
+                            {addedPhotos.length > 0 && addedPhotos.map((link , index) => (
+                                <div key={index}>
                                     {link}
                                 </div>
                             ))}
