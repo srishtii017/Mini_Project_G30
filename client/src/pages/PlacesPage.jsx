@@ -121,6 +121,8 @@ export default function PlacesPage() {
                             <div>
                                 <h3 className="mt-2 -mb-1"> Max no. of guests</h3>
                                 <input type="number"
+                                    min={1}
+                                    // max={100}
                                     value={maxGuests}
                                     onChange={ev => setMaxGuests(ev.target.value)}
                                 />
