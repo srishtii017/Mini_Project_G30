@@ -45,18 +45,6 @@ export default function PlacesFormPage() {
         };
         await axios.post('/places', placeData);
             setRedirect(true);
-        // if (id) {
-        //     // update
-        //     await axios.put('/places', {
-        //         id, ...placeData
-        //     });
-        //     setRedirect(true);
-        // } else {
-        //     // new place
-        //     await axios.post('/places', placeData);
-        //     setRedirect(true);
-        // }
-
     }
 
     if (redirect) {

@@ -32,11 +32,6 @@ app.use(cors({
 mongoose.connect(process.env.MONGO_URL);
 
 
-
-
-
-
-
 //EXPRESS APP METHODS
 app.get('/test', (req, res) => {
     res.json('test');
