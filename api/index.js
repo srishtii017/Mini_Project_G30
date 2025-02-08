@@ -181,6 +181,19 @@ app.get('/places', async (req, res) => {
     res.json(await Place.find());
 })
 
+app.post('/bookings',(req,res)=>{
+    const {
+        place,checkIn,checkOut,numberOfGuests,name,phone,price
+    } = req.body;
+    Booking.create({
+        place,checkIn,checkOut,numberOfGuests,name,phone,price,
+        user:userData.id,
+      }).then((doc) => {
+        res.json(doc);
+      }).catch((err) => {
+        throw err;
+      });
+})
 app.listen(4000, (req, res) => {
     console.log("app is running on port 4000");
 })
