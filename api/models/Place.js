@@ -11,6 +11,7 @@ const placeSchema = new mongoose.Schema({
     extraInfo: String,
     checkIn: Number,
     checkOut: Number,
+    price : Number ,
     maxGuests: Number,
     // these are components of accomadation page
 });
