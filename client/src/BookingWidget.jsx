@@ -1,17 +1,18 @@
-import {useContext, useEffect, useState} from "react";
-import {differenceInCalendarDays} from "date-fns";
+import PropTypes from "prop-types";
+import { useContext, useEffect, useState } from "react";
+import { differenceInCalendarDays } from "date-fns";
 import axios from "axios";
-import {Navigate} from "react-router-dom";
-import {UserContext} from "./UserContext.jsx";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "./UserContext.jsx";
 
-export default function BookingWidget({place}) {
-  const [checkIn,setCheckIn] = useState('');
-  const [checkOut,setCheckOut] = useState('');
-  const [numberOfGuests,setNumberOfGuests] = useState(1);
-  const [name,setName] = useState('');
-  const [phone,setPhone] = useState('');
-  const [redirect,setRedirect] = useState('');
-  const {user} = useContext(UserContext);
+export default function BookingWidget({ place }) {
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [redirect, setRedirect] = useState('');
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user) {
@@ -25,13 +26,19 @@ export default function BookingWidget({place}) {
   }
 
   async function bookThisPlace() {
+    if (!user || !user._id) {
+      alert("You must be logged in to book a place.");
+      return;
+    }
+
     const response = await axios.post('/bookings', {
-      checkIn,checkOut,numberOfGuests,name,phone,
-      place:place._id,
-      price:numberOfNights * place.price,
+      checkIn, checkOut, numberOfGuests, name, phone,
+      place: place._id,
+      price: numberOfNights * place.price,
+      userId : user._id
     });
-    const bookingId = response.data._id;
-    setRedirect(`/account/bookings/${bookingId}`);
+    
+    setRedirect(`/account/bookings/${response.data._id}`);
   }
 
   if (redirect) {
@@ -48,31 +55,31 @@ export default function BookingWidget({place}) {
           <div className="py-3 px-4">
             <label>Check in:</label>
             <input type="date"
-                   value={checkIn}
-                   onChange={ev => setCheckIn(ev.target.value)}/>
+              value={checkIn}
+              onChange={ev => setCheckIn(ev.target.value)} />
           </div>
           <div className="py-3 px-4 border-l">
             <label>Check out:</label>
             <input type="date" value={checkOut}
-                   onChange={ev => setCheckOut(ev.target.value)}/>
+              onChange={ev => setCheckOut(ev.target.value)} />
           </div>
         </div>
         <div className="py-3 px-4 border-t">
           <label>Number of guests:</label>
           <input type="number"
-                 value={numberOfGuests}
-                 onChange={ev => setNumberOfGuests(ev.target.value)}/>
+            value={numberOfGuests}
+            onChange={ev => setNumberOfGuests(ev.target.value)} />
         </div>
         {numberOfNights > 0 && (
           <div className="py-3 px-4 border-t">
             <label>Your full name:</label>
             <input type="text"
-                   value={name}
-                   onChange={ev => setName(ev.target.value)}/>
+              value={name}
+              onChange={ev => setName(ev.target.value)} />
             <label>Phone number:</label>
             <input type="tel"
-                   value={phone}
-                   onChange={ev => setPhone(ev.target.value)}/>
+              value={phone}
+              onChange={ev => setPhone(ev.target.value)} />
           </div>
         )}
       </div>
@@ -85,3 +92,11 @@ export default function BookingWidget({place}) {
     </div>
   );
 }
+
+
+BookingWidget.propTypes = {
+  place: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }).isRequired,
+};

@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const User = require('./models/User.js');
 const Place = require('./models/Place.js')
+const Booking = require('./models/Booking.js');
 const cookieParser = require('cookie-parser')
 const imageDownloader = require('image-downloader')
 const multer = require('multer')
@@ -154,7 +155,7 @@ app.get('/user-places', (req, res) => {
 
 app.get('/places/:id', async (req, res) => {
     const { id } = req.params;
-    res.json(await Place.findById(id)); 
+    res.json(await Place.findById(id));
 })
 
 app.put('/places', async (req, res) => {
@@ -181,18 +182,25 @@ app.get('/places', async (req, res) => {
     res.json(await Place.find());
 })
 
-app.post('/bookings',(req,res)=>{
+app.post('/bookings',async (req, res) => {
     const {
-        place,checkIn,checkOut,numberOfGuests,name,phone,price
+        place, checkIn, checkOut,
+        numberOfGuests, name, phone, price , userId
     } = req.body;
-    Booking.create({
-        place,checkIn,checkOut,numberOfGuests,name,phone,price,
-        user:userData.id,
-      }).then((doc) => {
+    if (!userId) {
+        return res.status(400).json({ error: "User ID is required" });
+    }
+    const booking = await Booking.create({
+        place, checkIn, checkOut,
+        numberOfGuests, name, phone,
+        price,
+        user: userId,
+    }).then((doc) => {
         res.json(doc);
-      }).catch((err) => {
+    }).catch((err) => {
         throw err;
-      });
+    });
+    res.json(booking);
 })
 app.listen(4000, (req, res) => {
     console.log("app is running on port 4000");
