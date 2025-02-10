@@ -1,4 +1,4 @@
-# 🏨 Full-Stack Hotel Booking Website  
+# 🏨 Full-Stack Hotel Booking Website  (AIRBNB CLONE)
 
 A **hotel booking platform** that allows users to browse hotels, book rooms, and manage reservations with a seamless experience. Built with a **scalable backend**, a **responsive frontend**, and a **secure authentication system**.  
 
