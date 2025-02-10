@@ -26,10 +26,10 @@ A **hotel booking platform** that allows users to browse hotels, book rooms, and
 - JWT for secure authentication  
 
 ## 🚀 Getting Started  
-  For frontend 
+  - For frontend 
   * cd client
-  * yarn dev
-  For Backend
+  * yarn dev 
+  - For Backend
   * cd api
   * nodemon index.js
 
