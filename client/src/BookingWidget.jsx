@@ -13,6 +13,7 @@ export default function BookingWidget({ place }) {
   const [phone, setPhone] = useState('');
   const [redirect, setRedirect] = useState('');
   const { user } = useContext(UserContext);
+  
 
   useEffect(() => {
     if (user) {
