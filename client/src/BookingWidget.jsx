@@ -4,6 +4,8 @@ import { differenceInCalendarDays } from "date-fns";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "./UserContext.jsx";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function BookingWidget({ place }) {
   const [checkIn, setCheckIn] = useState('');
@@ -28,7 +30,8 @@ export default function BookingWidget({ place }) {
 
   async function bookThisPlace() {
     if (!user || !user._id) {
-      alert("You must be logged in to book a place.");
+      // alert("You must be logged in to book a place.");
+      toast.error("You must be logged in to book a place.");
       return;
     }
 
@@ -71,6 +74,17 @@ export default function BookingWidget({ place }) {
             value={numberOfGuests}
             onChange={ev => setNumberOfGuests(ev.target.value)} />
         </div>
+        
+        
+        {
+          numberOfNights > 0 && (
+            <div className="py-3 px-4 border-t">
+              <label>Number of nights:</label>
+              <input type="number" value={numberOfNights} disabled />
+            </div>
+          )}
+
+        
         {numberOfNights > 0 && (
           <div className="py-3 px-4 border-t">
             <label>Your full name:</label>

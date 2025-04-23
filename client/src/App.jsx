@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
+import './index.css'
 import IndexPage from './pages/IndexPage'
 import LoginPage from './pages/LoginPage'
 import Layout from './Layout'
@@ -12,6 +13,8 @@ import PlacesFormPage from "./pages/PlacesFormPage";
 import PlacePage from './pages/PlacePage.jsx'
 import BookingsPage from './pages/BookingsPage.jsx'
 import BookingPage from './pages/BookingPage.jsx'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 axios.defaults.baseURL = 'http://localhost:4000';
@@ -22,7 +25,7 @@ function App() {
 
 
   return (
-    <UserContextProvider>
+    <UserContextProvider className="scrollbar-hide">
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<IndexPage />} />
@@ -37,7 +40,9 @@ function App() {
           <Route path='/account/bookings/:id' element={<BookingPage />} />
         </Route>
       </Routes>
+      <ToastContainer />
     </UserContextProvider>
+
   )
 }
 

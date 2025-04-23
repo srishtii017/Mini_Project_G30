@@ -23,3 +23,161 @@ button.primary:hover{
    background-color: #F5385D ;
    @apply  text-white border-primary overflow-hidden shadow-md shadow-red-200;
 }
+
+
+
+/* Add these CSS styles to your global stylesheet or component-specific styles */
+
+/* General styles */
+.max-w-6xl {
+  max-width: 72rem;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #F5385D;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Avatar styling */
+.avatar-container {
+  position: relative;
+  width: 12rem;
+  height: 12rem;
+}
+
+.avatar-upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #F5385D;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 3px solid white;
+}
+
+.avatar-upload-btn:hover {
+  transform: scale(1.1);
+  background-color: #E02C52;
+}
+
+/* Stats box styling */
+.stats-box {
+  background-color: #f8f8f8;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Form styling */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #4B5563;
+}
+
+input, textarea {
+  padding: 0.75rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #F5385D;
+  box-shadow: 0 0 0 3px rgba(245, 56, 93, 0.2);
+}
+
+/* Button styling */
+button.primary {
+  background-color: #F5385D;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button.primary:hover {
+  background-color: #E02C52;
+}
+
+button.primary:disabled {
+  background-color: #F5A5B5;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background-color: #E5E7EB;
+  color: #4B5563;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button.secondary:hover {
+  background-color: #D1D5DB;
+}
+
+/* Info card styling */
+.info-card {
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.info-label {
+  font-size: 0.875rem;
+  color: #6B7280;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.status-badge {
+  background-color: #10B981;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.bio-text {
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  line-height: 1.5;
+}

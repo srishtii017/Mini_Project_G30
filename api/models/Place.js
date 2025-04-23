@@ -14,7 +14,7 @@ const placeSchema = new mongoose.Schema({
     price : Number ,
     maxGuests: Number,
     // these are components of accomadation page
-});
+} , {timestamps: true});
 
 
 

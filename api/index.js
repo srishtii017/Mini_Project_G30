@@ -30,13 +30,24 @@ app.use(cors({
 
 //DATABASE
 
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => {
+        console.log("connected to db")
+    })
+    .catch((err) => {
+        console.log("Mongo db connection error : " ,err)
+    });
 
-function getUserDataFromReq(req){
-    return new Promise((resolve,reject)=>{
-        jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
-            if(err) throw err;
-            resolve(userData);
+function getUserDataFromReq(req) {
+    return new Promise((resolve, reject) => {
+        const token = req.cookies.token;
+        if (!token) {
+            reject('No token found');
+            return;
+        }
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) reject(err);
+            else resolve(userData);
         });
     });
 }
@@ -64,34 +75,57 @@ app.post('/register', async (req, res) => {
 })
 
 
+// app.post('/login', async (req, res) => {
+//     const { email, password } = req.body;
+//     const userDoc = await User.findOne({
+//         email
+//     })
+//     if (userDoc) {
+//         console.log(userDoc);
+//         const passOk = bcrypt.compareSync(password, userDoc.password)
+//         if (passOk) {
+//             jwt.sign({
+//                 email: userDoc.email,
+//                 id: userDoc._id,
+//             }, jwtSecret, {}, (err, token) => {
+//                 if (err) throw err;
+//                 res.cookie('token', token).json(userDoc);
+//             })
+//         } else {
+//             res.status(422).json('pass not ok');
+//         }
+//     } else {
+//         res.json('not found');
+//     }
+// })
+
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    const userDoc = await User.findOne({
-        email
-    })
-    if (userDoc) {
-        const passOk = bcrypt.compareSync(password, userDoc.password)
-        if (passOk) {
-            jwt.sign({
-                email: userDoc.email,
-                id: userDoc._id,
-            }, jwtSecret, {}, (err, token) => {
-                if (err) throw err;
-                res.cookie('token', token).json(userDoc);
-            })
-        } else {
-            res.status(422).json('pass not ok');
-        }
-    } else {
-        res.json('not found');
+    const userDoc = await User.findOne({ email });
+
+    if (!userDoc) {
+        return res.status(404).json({ error: 'User not found' });
     }
-})
+
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    if (!passOk) {
+        return res.status(401).json({ error: 'Incorrect password' });
+    }
+
+    jwt.sign({
+        email: userDoc.email,
+        id: userDoc._id,
+    }, jwtSecret, {}, (err, token) => {
+        if (err) throw err;
+        res.cookie('token', token).json(userDoc);
+    });
+});
 
 app.get('/profile', (req, res) => {
     const { token } = req.cookies;
     if (token) {
-        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        jwt.verify(token, jwtSecret, async (err, userData) => {
             if (err) throw err;
             const { name, email, _id } = await User.findById(userData.id);
 
@@ -100,7 +134,6 @@ app.get('/profile', (req, res) => {
     } else {
         res.json(null);
     }
-
 })
 app.post('/logout', (req, res) => {
     res.cookie('token', '').json(true);
@@ -191,26 +224,29 @@ app.get('/places', async (req, res) => {
     res.json(await Place.find());
 })
 
-app.post('/bookings',async (req, res) => {
-    const userData = await getUserDataFromReq(req);
-    const {
-        place, checkIn, checkOut,
-        numberOfGuests, name, phone, price , userId
-    } = req.body;
-    if (!userId) {
-        return res.status(400).json({ error: "User ID is required" });
+app.post('/bookings', async (req, res) => {
+    try {
+        const userData = await getUserDataFromReq(req);
+        const {
+            place, checkIn, checkOut,
+            numberOfGuests, name, phone, price, userId
+        } = req.body;
+        if (!userId) {
+            return res.status(400).json({ error: "User ID is required" });
+        }
+        const booking = await Booking.create({
+            place, checkIn, checkOut,
+            numberOfGuests, name, phone,
+            price,
+            user: userData.id,
+        }).then((doc) => {
+            res.json(doc);
+        }).catch((err) => {
+            throw err;
+        });
+    } catch (err) {
+        res.status(401).json({ error: "Authentication failed" });
     }
-    const booking = await Booking.create({
-        place, checkIn, checkOut,
-        numberOfGuests, name, phone,
-        price,
-        user: userData.id,
-    }).then((doc) => {
-        res.json(doc);
-    }).catch((err) => {
-        throw err;
-    });
-    
 });
 
 
@@ -218,6 +254,19 @@ app.get('/bookings', async (req,res)=>{
     const userData= await getUserDataFromReq(req);
     res.json(await Booking.find({user:userData.id}).populate('place') )
 })
+
+app.get('/bookingscount', async (req, res) => {
+    try {
+        const userData = await getUserDataFromReq(req);
+        const count = await Booking.countDocuments({ user: userData.id });
+        res.json({ count });
+    } catch (err) {
+        res.status(401).json({ error: "Authentication failed" });
+    }
+})
+
+
+
 app.listen(4000, (req, res) => {
     console.log("app is running on port 4000");
 })

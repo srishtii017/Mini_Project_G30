@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , Navigate} from "react-router-dom";
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 export default function RegisterPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [redirect, setRedirect] = useState(false);
     async function registerUser(ev) {
         ev.preventDefault();
         try {
@@ -14,12 +16,18 @@ export default function RegisterPage() {
                 email,
                 password
             });
-            alert('Registration Successfull, now you can login');
+            // alert('Registration Successfull, now you can login');
+            toast.success('Registration Successfull, now you can login');
+            setRedirect(true);
+
         } catch(e) {
-            alert('Registration failed , please again later');
+            // alert('Registration failed , please again later');
             console.log('REGISTRATION ERROR : ',e);
         }
     }
+    if (redirect) {
+            return <Navigate to={'/login'} />
+        }
 
     return (
         <div className="mt-4 grow flex items-center justify-around">

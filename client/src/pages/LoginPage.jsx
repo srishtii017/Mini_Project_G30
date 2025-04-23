@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -12,15 +13,17 @@ export default function LoginPage() {
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
         try {
-            const {data} = await axios.post('/login', {email, password})
+            const { data } = await axios.post('/login', { email, password });
+            console.log("LOGIN DATA: ", data);
+
             setUser(data);
-            alert('login successful');
-            
+            toast.success('Login successful');
             setRedirect(true);
-            
+
         } catch (e) {
-            alert('login failed');
-            console.log("LOGIN ERROR : ",e);
+            console.log("LOGIN ERROR: ", e);
+            const errorMessage = e.response?.data?.error || 'Login failed';
+            toast.error(errorMessage);
         }
     }
 

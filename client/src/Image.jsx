@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import './index.css'
 export default function Image({ src, ...rest }) {
     src = src && src.includes('http://')
         ? src
