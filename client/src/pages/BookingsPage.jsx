@@ -1,55 +1,3 @@
-// import { useEffect, useState } from "react";
-// import AccountNav from "../AccountNav";
-// import axios from "axios";
-// import PlaceImg from "../PlaceImg";
-// import { Link } from "react-router-dom";
-// import BookingDates from "../BookingDates";
-
-// export default function BookingsPage() {
-//     const [bookings, setBookings] = useState([]);
-//     useEffect(() => {
-//         axios.get('/bookings').then(response => {
-//             setBookings(response.data);
-
-//         });
-
-//     }, []);
-
-//     return (
-//         <div>
-//             <AccountNav />
-//             <div>
-//                 {bookings?.length > 0 && bookings.map((booking, index) => (
-//                     <Link to={`/account/bookings/${booking._id}`} key={index} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden">
-//                         <div className="w-48">
-//                             <PlaceImg place={booking.place} />
-//                         </div>
-//                         <div className="py-3 pr-3 grow">
-//                             <h2 className="text-xl">{booking.place.title}</h2>
-//                             <div className="text-xl">
-//                                 <BookingDates booking={booking} className="mb-2 mt-4 text-gray-500" />
-//                             </div>
-//                             <div className="flex gap-1">
-//                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
-//                                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
-//                                 </svg>
-//                                 <span className="text-2xl">
-//                                     Total price : ${booking.price}
-//                                 </span>
-//                             </div>
-
-                            
-
-//                         </div>
-//                     </Link>
-//                 ))}
-
-//             </div>
-//         </div>
-//     );
-// }
-
-
 import { useEffect, useState } from "react";
 import AccountNav from "../AccountNav";
 import axios from "axios";
@@ -87,7 +35,7 @@ export default function BookingsPage() {
         <div className="max-w-6xl mx-auto px-4 py-8">
             <AccountNav />
 
-            <h1 className="text-3xl font-bold mb-6">Your Bookings</h1>
+            <h1 className="text-3xl  mb-6">Your Bookings</h1>
 
             {bookings.length === 0 && (
                 <div className="bg-gray-100 p-8 rounded-2xl text-center">
@@ -109,7 +57,7 @@ export default function BookingsPage() {
                             <PlaceImg place={booking.place} className="object-cover w-full h-full" />
                         </div>
                         <div className="p-4 md:py-3 md:pr-3 grow">
-                            <h2 className="text-xl font-bold mb-2">{booking.place.title}</h2>
+                            <h2 className="text-xl  mb-2">{booking.place.title}</h2>
                             <BookingDates
                                 booking={booking}
                                 className="mb-3 text-gray-600"
@@ -123,7 +71,7 @@ export default function BookingsPage() {
                                 </span>
                             </div>
                             <div className="mt-4 flex justify-end">
-                                <span className="bg-primary bg-opacity-10 text-primary px-4 py-1 rounded-full text-sm font-medium">
+                                <span className="bg-primary bg-opacity-10 text-white px-4 py-1 rounded-full text-sm font-medium">
                                     View details →
                                 </span>
                             </div>

@@ -175,7 +175,6 @@ export default function PlacePage() {
                   </div>
                 ))}
 
-                {/* Second portion - visible only when showAllAmenities is true */}
                 {showAllAmenities && place.perks.slice(4).map((perk, index) => (
                   <div key={index} className="flex items-center gap-4">
                     {perk === 'wifi' && (
@@ -204,8 +203,6 @@ export default function PlacePage() {
                         <span>Free parking on premises</span>
                       </>
                     )}
-
-                    {/* ... Additional perks with their icons */}
                     {perk === 'tv' && (
                       <>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -263,11 +260,11 @@ export default function PlacePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-gray-500 text-sm mb-1">Check-in</h3>
-                <p className="font-medium">{place.checkIn}</p>
+                <p className="font-medium">{place.checkIn} am</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-gray-500 text-sm mb-1">Check-out</h3>
-                <p className="font-medium">{place.checkOut}</p>
+                <p className="font-medium">{place.checkOut} pm</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="text-gray-500 text-sm mb-1">Max guests</h3>

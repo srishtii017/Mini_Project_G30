@@ -95,29 +95,7 @@ export default function Header() {
                                 </div>
                             )
                         }
-                        {/* <div>
-                            <Link
-                                to="/host"
-                                className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Airbnb your home
-                            </Link>
-                            <Link
-                                to="/host/experiences"
-                                className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Host an experience
-                            </Link>
-                            <Link
-                                to="/help"
-                                className="block px-4 py-3 text-gray-800 hover:bg-gray-100"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                Help Centre
-                            </Link>
-                        </div> */}
+                        
                     </div>
                         
                     )}

@@ -74,32 +74,6 @@ app.post('/register', async (req, res) => {
     }
 })
 
-
-// app.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     const userDoc = await User.findOne({
-//         email
-//     })
-//     if (userDoc) {
-//         console.log(userDoc);
-//         const passOk = bcrypt.compareSync(password, userDoc.password)
-//         if (passOk) {
-//             jwt.sign({
-//                 email: userDoc.email,
-//                 id: userDoc._id,
-//             }, jwtSecret, {}, (err, token) => {
-//                 if (err) throw err;
-//                 res.cookie('token', token).json(userDoc);
-//             })
-//         } else {
-//             res.status(422).json('pass not ok');
-//         }
-//     } else {
-//         res.json('not found');
-//     }
-// })
-
-
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const userDoc = await User.findOne({ email });
@@ -265,7 +239,16 @@ app.get('/bookingscount', async (req, res) => {
     }
 })
 
-
+app.get('/listingscount', async (req, res) => {
+    try {
+        const userData = await getUserDataFromReq(req);
+        const count = await Place.countDocuments({ owner : userData.id });
+        // console.log(count);
+        res.json({ count });
+    } catch (err) {
+        res.status(401).json({ error: "Authentication failed" });
+    }
+})
 
 app.listen(4000, (req, res) => {
     console.log("app is running on port 4000");
